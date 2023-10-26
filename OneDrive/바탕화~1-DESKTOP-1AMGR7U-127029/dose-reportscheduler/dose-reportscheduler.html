@@ -22,7 +22,7 @@
             left: 38px;
             top: 47px;
             z-index: 2;
-            border-left: 2px solid #BCC6CF;
+            border-left: 1.5px solid #BCC6CF;
         }
         .item {
             position: relative;
@@ -45,6 +45,20 @@
             height: 175px;
         }
 
+        .context-container {
+            height: 75%; 
+            border: 1.3px solid #b5bbc0; 
+            border-radius: 2px;
+        }
+        .context-title{
+            padding: 4px 13px;
+            border-bottom: 1px solid #b5bbc0;
+            font-size: 14px;
+        }
+        .context-table{
+            font-size: 12.5px;
+            padding: 4px 8px;
+        }
         .button-container {
             padding: 7px 0px;
             border-top: 1.3px solid #b5bbc0;
@@ -84,9 +98,11 @@
         @keyframes ani-open-slide {
             from {
                 height: 0px;
+                overflow: hidden;
             }
             to {
                 height: 175px;
+                overflow: visible;
             }
         }
     </style>
@@ -100,8 +116,28 @@
                 <span>Set Type of Recurrence</span>
             </label>
             <div class="show">
-                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
-                    aasdfsffsf       
+                <div class="context-container">
+                    <div class="context-title">
+                        What kind of repeat event do you want to use?
+                    </div>
+                    <table class="context-table">
+                        <tr>
+                            <td><input type="radio" name="report-type"/></td>
+                            <td>Yearly</td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="report-type"/></td>
+                            <td>Monthly</td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="report-type"/></td>
+                            <td>Weekly</td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="report-type"/></td>
+                            <td>Daily</td>
+                        </tr>
+                    </table>   
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -115,8 +151,24 @@
                 <span>Use a Previous Schedule</span>
             </label>
             <div class="hide">
-                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
-                    aasdfsffsf       
+                <div class="context-container">
+                    <div class="context-title">
+                        Will you reuse the old schedule?
+                    </div>   
+                    <table class="context-table">
+                        <tr>
+                            <td><input type="radio" name="report-create-new"/></td>
+                            <td>No, I'm going to create a now schedule</td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="report-create-new"/></td>
+                            <td>Yearly - Monitoring - Study - Group of Chest Study (CT)</td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="report-create-new"/></td>
+                            <td>Yearly - Monitoring - Study - Group of Chest Study (CT)</td>
+                        </tr>
+                    </table>   
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -130,8 +182,10 @@
                 <span>Set Recurrence Frequency</span>
             </label>
             <div class="hide">
-                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
-                    aasdfsffsf       
+                <div class="context-container">
+                    <div class="context-title">
+                        Regarding Repeat Count
+                    </div>   
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -145,8 +199,10 @@
                 <span>Set Repetition Timing</span>
             </label>
             <div class="hide">
-                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
-                    aasdfsffsf       
+                <div class="context-container">
+                    <div class="context-title">
+                        When will it repeat?
+                    </div>   
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -160,8 +216,10 @@
                 <span>Set an end date</span>
             </label>
             <div class="hide">
-                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
-                    aasdfsffsf       
+                <div class="context-container">
+                    <div class="context-title">
+                        When can we stop this repetition?
+                    </div>   
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -175,8 +233,10 @@
                 <span>Set Data Search Period</span>
             </label>
             <div class="hide">
-                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
-                    aasdfsffsf       
+                <div class="context-container">
+                    <div class="context-title">
+                        How long of the a data period should we include in this report?
+                    </div>   
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -190,8 +250,10 @@
                 <span>Other Key Settings</span>
             </label>
             <div class="hide">
-                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
-                    aasdfsffsf       
+                <div class="context-container">
+                    <div class="context-title">
+                        What is the purpose of this schedule? (Used for schedule reuse)
+                    </div>   
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>

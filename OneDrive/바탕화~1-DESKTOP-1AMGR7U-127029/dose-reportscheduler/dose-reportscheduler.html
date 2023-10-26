@@ -17,7 +17,7 @@
 
         .line {
             width: 100px;
-            height: 500px;
+            height: 524px;
             position: absolute;
             left: 38px;
             top: 47px;
@@ -52,33 +52,43 @@
         }
         .button {
             width: 73px;
-            height: 24px;
+            height: 27px;
             background-color: #CCDCF3;
             border: 1px solid #b5bbc0;
-            border-radius: 6.8%;
+            border-radius: 5.8%;
             color: #3b4755;
         }
 
-        /* .show {
-            display: block;
-            transition: display 1s;
-        }
-        .hide {
-            display: none;
-            transition: display 1s;
+        /* .show, .hide{
+            transition: height 1s;
         } */
-        .show, .hide{
-            transition: height 5s;
-        }
         .show{
-            height: 175px;
-            opacity: 1;
+            animation: ani-open-slide 1s forwards;
+            animation-fill-mode: forwards;
         }
         .hide{
-            height: 0px;
-            opacity: 0;
+            animation: ani-close-slide 1s forwards;
+            animation-fill-mode: forwards;
         }
 
+        /* slide anination */
+        @keyframes ani-close-slide {
+            from {
+                height: 175px;
+            }
+            to {
+                height: 0px;
+                overflow: hidden;
+            }
+        }
+        @keyframes ani-open-slide {
+            from {
+                height: 0px;
+            }
+            to {
+                height: 175px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -90,7 +100,7 @@
                 <span>Set Type of Recurrence</span>
             </label>
             <div class="show">
-                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
                     aasdfsffsf       
                 </div>
                 <div class="button-container">
@@ -105,7 +115,7 @@
                 <span>Use a Previous Schedule</span>
             </label>
             <div class="hide">
-                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
                     aasdfsffsf       
                 </div>
                 <div class="button-container">
@@ -120,7 +130,7 @@
                 <span>Set Recurrence Frequency</span>
             </label>
             <div class="hide">
-                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
                     aasdfsffsf       
                 </div>
                 <div class="button-container">
@@ -135,7 +145,7 @@
                 <span>Set Repetition Timing</span>
             </label>
             <div class="hide">
-                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
                     aasdfsffsf       
                 </div>
                 <div class="button-container">
@@ -150,7 +160,7 @@
                 <span>Set an end date</span>
             </label>
             <div class="hide">
-                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
                     aasdfsffsf       
                 </div>
                 <div class="button-container">
@@ -165,7 +175,7 @@
                 <span>Set Data Search Period</span>
             </label>
             <div class="hide">
-                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
                     aasdfsffsf       
                 </div>
                 <div class="button-container">
@@ -180,7 +190,7 @@
                 <span>Other Key Settings</span>
             </label>
             <div class="hide">
-                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                <div style="height: 75%; transition : height 5s; border: 1.3px solid #b5bbc0; border-radius: 2px;">
                     aasdfsffsf       
                 </div>
                 <div class="button-container">
@@ -197,6 +207,7 @@
         var show_item = $(this).parents('.item').next().children('.hide');
         var show_item_height = show_item.height();
 
+        $(this).parents('.item').children('label').children('.item-num').css('background-color', '#36A23D');
         $('.item .show').removeClass('show').addClass('hide');
         show_item.removeClass('hide').addClass('show');
 
@@ -205,6 +216,7 @@
         var show_item = $(this).parents('.item').prev().children('.hide');
         var show_item_height = show_item.height();
 
+        $(this).parents('.item').children('label').children('.item-num').css('background-color', '#3982C8');
         $('.item .show').removeClass('show').addClass('hide');
         show_item.removeClass('hide').addClass('show');
     });

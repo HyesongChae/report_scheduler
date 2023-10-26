@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #E7EFFC;
+            padding: 29px;
+        }
+
+        .line {
+            width: 100px;
+            height: 500px;
+            position: absolute;
+            left: 38px;
+            top: 47px;
+            z-index: 2;
+            border-left: 2px solid #BCC6CF;
+        }
+        .item {
+            position: relative;
+            z-index: 3;
+        }
+        .item-num {
+            display: inline-block;
+            background-color: #3982C8;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            border-radius: 50%;
+            color: white;
+            line-height: 1.2em;
+        }
+        .item > div {
+            margin-left: 30px;
+        }
+        .clicked-item {
+            height: 175px;
+        }
+
+        .button-container {
+            padding: 7px 0px;
+            border-top: 1.3px solid #b5bbc0;
+            margin-top: 10px;
+        }
+        .button {
+            width: 73px;
+            height: 24px;
+            background-color: #CCDCF3;
+            border: 1px solid #b5bbc0;
+            border-radius: 6.8%;
+            color: #3b4755;
+        }
+
+        /* .show {
+            display: block;
+            transition: display 1s;
+        }
+        .hide {
+            display: none;
+            transition: display 1s;
+        } */
+        .show, .hide{
+            transition: height 5s;
+        }
+        .show{
+            height: 175px;
+            opacity: 1;
+        }
+        .hide{
+            height: 0px;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="line"></div>
+        <div class="item">
+            <label>
+                <p class="item-num">0</p>
+                <span>Set Type of Recurrence</span>
+            </label>
+            <div class="show">
+                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                    aasdfsffsf       
+                </div>
+                <div class="button-container">
+                    <button class="button btn-next">Next</button>
+                    <button class="button btn-cancel">Cancel</button>
+                </div>   
+            </div> 
+        </div>
+        <div class="item">
+            <label>
+                <p class="item-num">1</p>
+                <span>Use a Previous Schedule</span>
+            </label>
+            <div class="hide">
+                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                    aasdfsffsf       
+                </div>
+                <div class="button-container">
+                    <button class="button btn-next">Next</button>
+                    <button class="button btn-prev">Previous</button>
+                </div>   
+            </div> 
+        </div>
+        <div class="item">
+            <label>
+                <p class="item-num">2</p>
+                <span>Set Recurrence Frequency</span>
+            </label>
+            <div class="hide">
+                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                    aasdfsffsf       
+                </div>
+                <div class="button-container">
+                    <button class="button btn-next">Next</button>
+                    <button class="button btn-prev">Previous</button>
+                </div>   
+            </div> 
+        </div>
+        <div class="item">
+            <label>
+                <p class="item-num">3</p>
+                <span>Set Repetition Timing</span>
+            </label>
+            <div class="hide">
+                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                    aasdfsffsf       
+                </div>
+                <div class="button-container">
+                    <button class="button btn-next">Next</button>
+                    <button class="button btn-prev">Previous</button>
+                </div>   
+            </div> 
+        </div>
+        <div class="item">
+            <label>
+                <p class="item-num">4</p>
+                <span>Set an end date</span>
+            </label>
+            <div class="hide">
+                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                    aasdfsffsf       
+                </div>
+                <div class="button-container">
+                    <button class="button btn-next">Next</button>
+                    <button class="button btn-prev">Previous</button>
+                </div>   
+            </div> 
+        </div>
+        <div class="item">
+            <label>
+                <p class="item-num">5</p>
+                <span>Set Data Search Period</span>
+            </label>
+            <div class="hide">
+                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                    aasdfsffsf       
+                </div>
+                <div class="button-container">
+                    <button class="button btn-next">Next</button>
+                    <button class="button btn-prev">Previous</button>
+                </div>   
+            </div> 
+        </div>
+        <div class="item">
+            <label>
+                <p class="item-num">6</p>
+                <span>Other Key Settings</span>
+            </label>
+            <div class="hide">
+                <div style="height: 130px; border: 1.3px solid #b5bbc0; border-radius: 2px;">
+                    aasdfsffsf       
+                </div>
+                <div class="button-container">
+                    <button class="button btn-next">Next</button>
+                    <button class="button btn-prev">Previous</button>
+                </div>   
+            </div> 
+        </div>
+    </div>    
+</body>
+</html>
+<script>
+    $(".btn-next").on("click", function(){
+        var show_item = $(this).parents('.item').next().children('.hide');
+        var show_item_height = show_item.height();
+
+        $('.item .show').removeClass('show').addClass('hide');
+        show_item.removeClass('hide').addClass('show');
+
+    });
+    $(".btn-prev").on("click", function(){
+        var show_item = $(this).parents('.item').prev().children('.hide');
+        var show_item_height = show_item.height();
+
+        $('.item .show').removeClass('show').addClass('hide');
+        show_item.removeClass('hide').addClass('show');
+    });
+</script>

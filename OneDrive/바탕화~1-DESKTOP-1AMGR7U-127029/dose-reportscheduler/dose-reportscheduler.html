@@ -6,15 +6,18 @@
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <style>
+        * {
+            list-style-type: none;
+        }
         body {
             margin: 0;
             padding: 0;
         }
+
         .container {
             background-color: #E7EFFC;
             padding: 29px;
         }
-
         .line {
             width: 100px;
             height: 524px;
@@ -54,7 +57,7 @@
             border-bottom: 1px solid #b5bbc0;
             font-size: 14px;
         }
-        .context-table{
+        .context{
             font-size: 12.5px;
             padding: 4px 8px;
         }
@@ -87,7 +90,7 @@
         /* slide anination */
         @keyframes ani-close-slide {
             from {
-                height: 175px;
+                height: 210px;
             }
             to {
                 height: 0px;
@@ -100,7 +103,7 @@
                 overflow: hidden;
             }
             to {
-                height: 175px;
+                height: 210px;
                 overflow: visible;
             }
         }
@@ -119,24 +122,12 @@
                     <div class="context-title">
                         What kind of repeat event do you want to use?
                     </div>
-                    <table class="context-table">
-                        <tr>
-                            <td><input type="radio" name="report-type"/></td>
-                            <td>Yearly</td>
-                        </tr>
-                        <tr>
-                            <td><input type="radio" name="report-type"/></td>
-                            <td>Monthly</td>
-                        </tr>
-                        <tr>
-                            <td><input type="radio" name="report-type"/></td>
-                            <td>Weekly</td>
-                        </tr>
-                        <tr>
-                            <td><input type="radio" name="report-type"/></td>
-                            <td>Daily</td>
-                        </tr>
-                    </table>   
+                    <ul class="context">
+                        <li><input type="radio" name="report-type"/><span>Yearly</span></li>
+                        <li><input type="radio" name="report-type"/><span>Monthly</span></li>
+                        <li><input type="radio" name="report-type"/><span>Weekly</span></li>
+                        <li><input type="radio" name="report-type"/><span>Daily</span></li>
+                    </ul>   
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -153,21 +144,21 @@
                 <div class="context-container">
                     <div class="context-title">
                         Will you reuse the old schedule?
-                    </div>   
-                    <table class="context-table">
-                        <tr>
-                            <td><input type="radio" name="report-create-new"/></td>
-                            <td>No, I'm going to create a now schedule</td>
-                        </tr>
-                        <tr>
-                            <td><input type="radio" name="report-create-new"/></td>
-                            <td>Yearly - Monitoring - Study - Group of Chest Study (CT)</td>
-                        </tr>
-                        <tr>
-                            <td><input type="radio" name="report-create-new"/></td>
-                            <td>Yearly - Monitoring - Study - Group of Chest Study (CT)</td>
-                        </tr>
-                    </table>   
+                    </div>    
+                    <ul class="context">
+                        <li>
+                            <input type="radio" name="report-createNew"/>
+                            <span>No, I'm going to create a now schedule</span>
+                        </li>
+                        <li>
+                            <input type="radio" name="report-createNew"/>
+                            <span>Yearly - Monitoring - Study - Group of Chest Study (CT)</span>
+                        </li>
+                        <li>
+                            <input type="radio" name="report-createNew"/>
+                            <span>Yearly - Monitoring - Study - Group of Chest Study (CT)</span>
+                        </li>
+                    </ul>  
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -184,7 +175,20 @@
                 <div class="context-container">
                     <div class="context-title">
                         Regarding Repeat Count
-                    </div>   
+                    </div>  
+                    <div class="context">
+                        <p>
+                            When will you start receiving it? (*Required) </br>
+                            From This Date
+                        </p>
+                        <p>
+                            Calender
+                        </p>
+                        <p>
+                            How often will it repeat? (*Required) </br>
+                            Every <input type="text" style="width:40px;"/> Year(s)
+                        </p>
+                    </div> 
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -201,7 +205,20 @@
                 <div class="context-container">
                     <div class="context-title">
                         When will it repeat?
-                    </div>   
+                    </div>  
+                    <div class="context">
+                        <p>
+                            When do you hope to receive this report? (*Required) </br>
+                            From This Date (<strong>Month(s) - day(s)</strong>)
+                        </p>
+                        <p>
+                            <select>
+                                <option>Jan</option>
+                            </select>
+                            /
+                            <input type="text" style="width:30px;"/>
+                        </p>
+                    </div>  
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -219,6 +236,20 @@
                     <div class="context-title">
                         When can we stop this repetition?
                     </div>   
+                    <ul class="context">
+                        <li>
+                            <input type="radio" name="report-endDate"/>
+                            <span>Never</span>
+                        </li>
+                        <li>
+                            <input type="radio" name="report-endDate"/>
+                            <span>Until</span>
+                        </li>
+                        <li>
+                            <input type="radio" name="report-endDate"/>
+                            <span>On</span>
+                        </li>
+                    </ul> 
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -236,6 +267,20 @@
                     <div class="context-title">
                         How long of the a data period should we include in this report?
                     </div>   
+                    <ul class="context">
+                        <li>
+                            <input type="radio" name="report-dataSearchPeriod"/>
+                            <span>Last Year</span>
+                        </li>
+                        <li>
+                            <input type="radio" name="report-dataSearchPeriod"/>
+                            <span>This Year</span>
+                        </li>
+                        <li>
+                            <input type="radio" name="report-dataSearchPeriod"/>
+                            <span>Last</span>
+                        </li>
+                    </ul> 
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>
@@ -253,6 +298,16 @@
                     <div class="context-title">
                         What is the purpose of this schedule? (Used for schedule reuse)
                     </div>   
+                    <table class="context">
+                        <tr>
+                            <td>Title (*Required)</td>
+                            <td><input type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td><input type="text"/></td>
+                        </tr>
+                    </table> 
                 </div>
                 <div class="button-container">
                     <button class="button btn-next">Next</button>

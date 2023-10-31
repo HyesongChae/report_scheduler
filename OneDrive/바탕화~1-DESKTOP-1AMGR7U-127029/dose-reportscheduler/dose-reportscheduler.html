@@ -382,6 +382,7 @@
 
     $(".btn-next").on("click", function(){
         //next 버튼이 있는 item 안에 value가 있는지 확인하기
+        //checkValuesInContext(this);
 
         var next_item = $(this).data('next');
         var curr_item = $(this).data('curr');
@@ -473,8 +474,84 @@
             $("button[data-curr=use_prev]").next('.btn-apply').css('display', 'none');  
         }
     })
+
     $( ".datepicker").datepicker();
 
+    function setRptTimeContext(){
+        if(curr_unit == 'Year') {
+
+            // <p>
+            //     <select id="rpt_month">
+            //         <option value="1" name="Jan">Jan</option>
+            //         <option value="2" name="Feb">Feb</option>
+            //         <option value="3" name="Mar">Mar</option>
+            //         <option value="4" name="April">April</option>
+            //         <option value="5" name="May">May</option>
+            //         <option value="6" name="June">June</option>
+            //         <option value="7" name="July">July</option>
+            //         <option value="8" name="Aug">Aug</option>
+            //         <option value="9" name="Sep">Sep</option>
+            //         <option value="10" name="Oct">Oct</option>
+            //         <option value="11" name="Nov">Nov</option>
+            //         <option value="12" name="Dec">Dec</option>
+            //     </select>
+            //     <span> / </span> 
+            //     <input type="text" id="rpt_day" style="width:30px;"/>
+            // </p>
+
+            var p_text = CreateCustomElement('p',{
+                innerHTML : 'From This Date (<strong>Month(s) - day(s)</strong>)'
+            });            
+            var sel_month_options = CreateCustomElement('option');
+            var sel_month = CreateCustomElement('select', {
+                id : 'rpt_month',
+                innerHTML : '<option value="1" name="Jan">Jan</option>'
+            });
+            var span_text = CreateCustomElement('span',{
+                innerHTML : ' / '
+            });
+            var input_rpt_day = CreateCustomElement('input', {
+                type : 'text',
+                id : 'rpt_day',
+                style : 'width : 30px;'
+            });
+
+            var res_element = CreateCustomElement('p', {
+                innerHTML : sel_month.outerHTML + span_text.outerHTML + input_rpt_day.outerHTML
+            });
+            return p_text.outerHTML + res_element.outerHTML;
+        }
+        if(curr_unit == 'Month') {
+            var input_rpt_month = CreateCustomElement('input', {
+                type : 'text',
+                id : 'rpt_month',
+                style : 'width : 30px;'
+            });
+            return CreateCustomElement('p', {
+                innerHTML : 'NextMonth ' + input_rpt_month.outerHTML + ' (st/nd/rd/th)'
+            });
+        }
+        if(curr_unit == 'Week') {
+            var arr_week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            var input_radio = CreateCustomElement('input',{
+                type : 'radio',
+                name : 'rpt_week',
+                value : '1'
+            });
+            return CreateCustomElement('p',{
+                style:'display : flex',
+                innerHTML : input_radio.outerHTML
+            });
+        }
+        if(curr_unit == 'Day') {
+            var datepicker_rpt_day = CreateCustomElement('input',{
+                className : 'rpt_day'
+            });
+            return CreateCustomElement('p',{
+                innerHTML : 'Tommorrow ' + datepicker_rpt_day.outerHTML
+            });
+        }
+    }
     function isInputValid (el, parm_unit){
         var unit = parm_unit == undefined ? curr_unit : parm_unit;
         var value = $(el).val();
@@ -495,4 +572,62 @@
         }
 
     }
+    function checkValuesInContext(el) {
+        var context = $(el).parents('.item').find('.context');
+        var elements = context.find("input, textarea, select");
+
+      for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        var has_value = false;
+
+        if(element.tagName == 'input'){
+            if(element.type == 'radio'){
+                var element_name = elements[i].name;
+            }
+            if(element.type == 'text'){
+
+            }
+        }
+        if(element.tagName == 'textarea'){
+            var element_id = elements[i].id;
+            var element_class = elements[i].class;
+
+            
+        }
+        if(element.tagName == 'select'){
+            var element_id = elements[i].id;
+            var element_class = elements[i].class;
+        }
+
+        // Check if the element is empty (value is empty)
+        if (has_value) {
+            return 'Go Next';
+        } else{
+            return 'Has Empty Value';
+        }
+      }
+    }
+    function CreateCustomElement(tag, attributes) {
+    var $element = $("<" + tag + ">");
+    for (var attribute in attributes) {
+        if (attribute === "className") {
+            if (Array.isArray(attributes[attribute])) {
+                $element.addClass(attributes[attribute].join(" "));
+            } else {
+                $element.addClass(attributes[attribute]);
+            }
+        } else if (attribute === "innerHTML") {
+            $element.html(attributes[attribute]);
+        } else if (attribute.slice(0, 2) === "on") {
+            $element.on(attribute.slice(2), attributes[attribute]);
+        } else {
+            if (typeof (attributes[attribute]) == 'boolean') {
+                $element.prop(attribute, attributes[attribute]);
+            } else {
+                $element.attr(attribute, attributes[attribute]);
+            }
+        }
+    }
+    return $element;
+}
 </script>

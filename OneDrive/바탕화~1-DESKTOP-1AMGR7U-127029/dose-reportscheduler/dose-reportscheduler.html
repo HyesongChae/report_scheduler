@@ -124,7 +124,7 @@
             <label>
                 <p class="item-num">0</p>
                 <span>Set Type of Recurrence</span>
-                <span id="recurrence_type"></span>
+                <span id="recurr_type"></span>
             </label>
             <div class="show">
                 <div class="context-container">
@@ -132,14 +132,14 @@
                         What kind of repeat event do you want to use?
                     </div>
                     <ul class="context">
-                        <li><input type="radio" name="recurrence_type" value="Yearly" checked/><span>Yearly</span></li>
-                        <li><input type="radio" name="recurrence_type" value="Monthly"/><span>Monthly</span></li>
-                        <li><input type="radio" name="recurrence_type" value="Weekly"/><span>Weekly</span></li>
-                        <li><input type="radio" name="recurrence_type" value="Daily"/><span>Daily</span></li>
+                        <li><input type="radio" name="recurr_type" value="Y" checked/><span>Yearly</span></li>
+                        <li><input type="radio" name="recurr_type" value="M"/><span>Monthly</span></li>
+                        <li><input type="radio" name="recurr_type" value="W"/><span>Weekly</span></li>
+                        <li><input type="radio" name="recurr_type" value="D"/><span>Daily</span></li>
                     </ul>   
                 </div>
                 <div class="button-container">
-                    <button class="button btn-next" data-btn="use_prevSchedule">Next</button>
+                    <button class="button btn-next" data-next="use_prev" data-curr="recurr_type">Next</button>
                     <button class="button btn-cancel">Cancel</button>
                 </div>   
             </div> 
@@ -148,7 +148,7 @@
             <label>
                 <p class="item-num">1</p>
                 <span>Use a Previous Schedule</span>
-                <span id="use_prevSchedule"></span>
+                <span id="use_prev"></span>
             </label>
             <div class="hide">
                 <div class="context-container">
@@ -157,18 +157,19 @@
                     </div>    
                     <ul class="context">
                         <li>
-                            <input type="radio" name="use_prevSchedule" value='N' checked/>
+                            <input type="radio" name="use_prev" value='N' checked/>
                             <span>No, I'm going to create a now schedule</span>
                         </li>
                         <li>
-                            <input type="radio" name="use_prevSchedule" value='Y'/>
+                            <input type="radio" name="use_prev" value='Y' data-schedulekey="2"/>
                             <span>Yearly - Monitoring - Study - Group of Chest Study (CT)</span>
                         </li>
                     </ul>  
                 </div>
                 <div class="button-container">
-                    <button class="button btn-next" data-btn="recurrence_frequency">Next</button>
-                    <button class="button btn-prev" data-btn="recurrence_type">Previous</button>
+                    <button class="button btn-next" data-next="recur_freq" data-curr="use_prev">Next</button>
+                    <button class="button btn-apply" style="display: none;">Apply</button>
+                    <button class="button btn-prev" data-prev="recurr_type">Previous</button>
                 </div>   
             </div> 
         </div>
@@ -176,7 +177,7 @@
             <label>
                 <p class="item-num">2</p>
                 <span>Set Recurrence Frequency</span>
-                <span id="recurrence_frequency"></span>
+                <span id="recur_freq"></span>
             </label>
             <div class="hide">
                 <div class="context-container">
@@ -187,15 +188,19 @@
                         <p>When will you start receiving it? (*Required)</p>
                         <p>From This Date</p>
                         <p>
-                            Date: <input type="text" id="freq_date" class="datepicker" style="width:81px;">
+                            Date: <input type="text" id="start_date" class="datepicker" style="width:81px;">
                         </p>
                         <p>How often will it repeat? (*Required)</p>
-                        <p>Every <input type="text" id="freq_year" style="width:35px;"/> Year(s)</p>
+                        <p>
+                            Every 
+                            <input type="text" id="repeat_cnt" style="width:35px;" onchange="isInputValid(this)"/> 
+                            <span id="curr_unit">Year</span>(s)
+                        </p>
                     </div> 
                 </div>
                 <div class="button-container">
-                    <button class="button btn-next" data-btn="repetition_timing">Next</button>
-                    <button class="button btn-prev" data-btn="use_prevSchedule">Previous</button>
+                    <button class="button btn-next" data-next="rpt_time" data-curr="recur_freq">Next</button>
+                    <button class="button btn-prev" data-prev="use_prev">Previous</button>
                 </div>   
             </div> 
         </div>
@@ -203,7 +208,7 @@
             <label>
                 <p class="item-num">3</p>
                 <span>Set Repetition Timing</span>
-                <span id="repetition_timing"></span>
+                <span id="rpt_time"></span>
             </label>
             <div class="hide">
                 <div class="context-container">
@@ -215,7 +220,18 @@
                         <p>From This Date (<strong>Month(s) - day(s)</strong>)</p>
                         <p>
                             <select id="rpt_month">
-                                <option value="1">Jan</option>
+                                <option value="1" name="Jan">Jan</option>
+                                <option value="2" name="Feb">Feb</option>
+                                <option value="3" name="Mar">Mar</option>
+                                <option value="4" name="April">April</option>
+                                <option value="5" name="May">May</option>
+                                <option value="6" name="June">June</option>
+                                <option value="7" name="July">July</option>
+                                <option value="8" name="Aug">Aug</option>
+                                <option value="9" name="Sep">Sep</option>
+                                <option value="10" name="Oct">Oct</option>
+                                <option value="11" name="Nov">Nov</option>
+                                <option value="12" name="Dec">Dec</option>
                             </select>
                             <span> / </span> 
                             <input type="text" id="rpt_day" style="width:30px;"/>
@@ -223,8 +239,8 @@
                     </div>  
                 </div>
                 <div class="button-container">
-                    <button class="button btn-next" data-btn="end_date">Next</button>
-                    <button class="button btn-prev" data-btn="recurrence_frequency">Previous</button>
+                    <button class="button btn-next" data-next="end_date" data-curr="rpt_time">Next</button>
+                    <button class="button btn-prev" data-prev="recur_freq">Previous</button>
                 </div>   
             </div> 
         </div>
@@ -258,8 +274,8 @@
                     </ul> 
                 </div>
                 <div class="button-container">
-                    <button class="button btn-next" data-btn="search_period">Next</button>
-                    <button class="button btn-prev" data-btn="repetition_timing">Previous</button>
+                    <button class="button btn-next" data-next="search_period" data-curr="end_date">Next</button>
+                    <button class="button btn-prev" data-prev="rpt_time">Previous</button>
                 </div>   
             </div> 
         </div>
@@ -288,14 +304,14 @@
                             <span>Last</span>
                             <input type="text" style="width:30px;"/>
                             <select>
-                                <option>Jan</option>
+                                <option >Jan</option>
                             </select>
                         </li>
                     </ul> 
                 </div>
                 <div class="button-container">
-                    <button class="button btn-next" data-btn="search_period">Next</button>
-                    <button class="button btn-prev" data-btn="end_date">Previous</button>
+                    <button class="button btn-next" data-next="search_period" data-curr="search_period">Next</button>
+                    <button class="button btn-prev" data-prev="end_date">Previous</button>
                 </div>   
             </div> 
         </div>
@@ -321,8 +337,8 @@
                     </table> 
                 </div>
                 <div class="button-container">
-                    <button class="button btn-next">Next</button>
-                    <button class="button btn-prev" data-btn="search_period">Previous</button>
+                    <button class="button btn-apply">Apply</button>
+                    <button class="button btn-prev" data-prev="search_period">Previous</button>
                 </div>   
             </div> 
         </div>
@@ -331,55 +347,78 @@
 </html>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
+    var curr_unit = 'Year';
     var info_reportScheduler = {
-        recurrence_type : null,
-        use_prevSchedule : 'N',
-        recurrence_frequency : {
-            freq_date : null,
-            freq_year : null
-        },
-        repetition_timing : {
-            rpt_month : null,
-            rpt_day : null
-        },
-        end_date : null,
-        search_period : null,
-        others : {
-            title : null,
-            description : null
-        }
-    };
+            recurr_type : null,
+            use_prev : null, // schedule_key,
+            recur_freq : {
+                start_date : null,
+                repeat_cnt : null
+            },
+            rpt_time : {
+                rpt_month : null,
+                rpt_week : null,
+                rpt_day : null,
+                rpt_time : null,
+            },
+            end_date : { 
+                use_enddt : 'N',
+                end_dt : null 
+            },
+            search_period : {
+                period : 0, //-1 ~ 999,
+                period_typ : null //"M" / 'W' / 'D'
+            },
+            others : {
+                title : null,
+                description : null
+            },
+            usr_key : 842, //hyesong
+            exprt_param : null
+        };
 
     $(".btn-next").on("click", function(){
-        var conf_btn = $(this).data('btn');
-        switch(conf_btn) {
-            case 'recurrence_type' : 
-                info_reportScheduler.recurrence_type = $('input[name=recurrence_type]').val();
+        //next 버튼이 있는 item 안에 value가 있는지 확인하기
+
+        var next_item = $(this).data('next');
+        var curr_item = $(this).data('curr');
+        var str_val = null;
+        
+        switch(curr_item) {
+            case 'recurr_type' : 
+                info_reportScheduler.recurr_type = $('input[name=recurr_type]:checked').val();
+                str_val = $('input[name=recurr_type]:checked').next().text();
                 break;
-            case 'use_prevSchedule' : 
-                info_reportScheduler.use_prevSchedule = $('input[name=use_prevSchedule]').val();
+            case 'use_prev' : 
+                info_reportScheduler.use_prev = $('input[name=use_prev]:checked').val();
+                str_val = info_reportScheduler.use_prev == 'N' ? "No" : "Yes";
                 break;
-            case 'recurrence_frequency' : 
-                info_reportScheduler.recurrence_frequency = {
-                    freq_date : $("#freq_date").val(),
-                    freq_year : $("#freq_year").val()
+            case 'recur_freq' : 
+                info_reportScheduler.recur_freq = {
+                    start_date : $("#start_date").val(),
+                    repeat_cnt : $("#repeat_cnt").val()
                 }
+                str_val = info_reportScheduler.recur_freq.start_date + ' ~, Every ' + info_reportScheduler.recur_freq.repeat_cnt + curr_unit + '(s)';
                 break;
-            case 'repetition_timing' : 
-                info_reportScheduler.repetition_timing = {
+            case 'rpt_time' : 
+                info_reportScheduler.rpt_time = {
                     rpt_month : $("#rpt_month").val(),
-                    rpt_day : $("#rpt_day").val()
+                    rpt_week : $("#rpt_week").val(),
+                    rpt_day : $("#rpt_day").val(),
+                    rpt_time : $("#rpt_time").val(),
                 }
+                str_val = $("#rpt_month option:selected").attr('name') + ' / ' + info_reportScheduler.rpt_time.rpt_day;
                 break;
             case 'end_date' : 
-                info_reportScheduler.end_date = $('input[name=end_date]').val();
+                info_reportScheduler.end_date = $('input[name=end_date]:checked').val();
+                str_val = $('input[name=end_date]:checked').next().text();
                 break;
             case 'search_period' : 
-                info_reportScheduler.search_period = $('input[name=search_period]').val();
+                info_reportScheduler.search_period = $('input[name=search_period]:checked').val();
+                str_val = $('input[name=search_period]:checked').next().text();
                 break;
             default :
                 //others
@@ -388,7 +427,7 @@
                     description : $("#desc").val()
                 }
                 break;
-        }
+        };
 
         var show_item = $(this).parents('.item').next().children('.hide');
         var show_item_height = show_item.height();
@@ -397,8 +436,7 @@
         $('.item .show').removeClass('show').addClass('hide');
         show_item.removeClass('hide').addClass('show');
 
-        $("#" + conf_btn).text('( aaa )')
-
+        $("#" + curr_item).html('(<strong> ' + str_val + ' </strong>)').css('font-size', '14px');
     });
     $(".btn-prev").on("click", function(){
         var show_item = $(this).parents('.item').prev().children('.hide');
@@ -408,6 +446,53 @@
         $('.item .show').removeClass('show').addClass('hide');
         show_item.removeClass('hide').addClass('show');
     });
+    $(".btn-apply").on("click", function(){
+        info_reportScheduler.others.title = $("#title").val();
+        info_reportScheduler.others.description = $("#desc").val();
 
+        debugger;
+        //add scheduleQueue
+    });
+
+    $("input[name=recurr_type]").on("change", function(){
+        var checked_val = $('input[name=recurr_type]:checked').val();
+        if(checked_val == 'Y') curr_unit = 'Year';
+        if(checked_val == 'M') curr_unit = 'Month';
+        if(checked_val == 'W') curr_unit = 'Week';
+        if(checked_val == 'D') curr_unit = 'Day';
+
+        $("#curr_unit").text(curr_unit);
+    })
+    $('input[name=use_prev]').on("change", function(){
+        var checked_val = $('input[name=use_prev]:checked').val();
+        if(checked_val != 'N'){
+            $("button[data-curr=use_prev]").css('display', 'none');
+            $("button[data-curr=use_prev]").next('.btn-apply').css('display', 'inline-block');
+        }else{
+            $("button[data-curr=use_prev]").css('display', 'inline-block');
+            $("button[data-curr=use_prev]").next('.btn-apply').css('display', 'none');  
+        }
+    })
     $( ".datepicker").datepicker();
+
+    function isInputValid (el, parm_unit){
+        var unit = parm_unit == undefined ? curr_unit : parm_unit;
+        var value = $(el).val();
+
+        // if(unit == 'Year'){
+        // }
+        if(unit == 'Month'){
+            if(!(value > 0 && value < 12))
+                $(el).val("");
+        }
+        if(unit == 'Week'){
+            if(!(value > 0 && value < 5))
+                $(el).val("");
+        }
+        if(unit == 'Day'){
+            if(!(value > 0 && value < 7))
+                $(el).val("");
+        }
+
+    }
 </script>

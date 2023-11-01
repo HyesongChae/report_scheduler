@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report Scheduler</title>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -79,6 +79,8 @@
         .context li {
             padding-bottom: 4px;
             box-sizing: border-box;
+            display: flex;
+            align-items: center;
         }
         .button-container {
             padding: 7px 0px;
@@ -271,15 +273,15 @@
                             <span>Never</span>
                         </li>
                         <li>
-                            <input type="radio" name="end_date" value="until"/>
-                            <span>Until</span>
-                            <input type="text" style="width:30px;"/>
+                            <input type="radio" name="end_date" value="time"/>
+                            <span>Until</span>&nbsp;
+                            <input type="text" style="width:30px;" id="end_time"/>&nbsp;
                             <span>time(s)</span>
                         </li>
                         <li>
-                            <input type="radio" name="end_date" value="on"/>
-                            <span>On</span>
-                            <input type="text" id="datepicker" style="width:81px;">
+                            <input type="radio" name="end_date" value="date"/>
+                            <span>On</span>&nbsp;
+                            <input type="text" id="end_date" class="datepicker" style="width:81px;">
                         </li>
                     </ul> 
                 </div>
@@ -311,8 +313,8 @@
                         </li>
                         <li>
                             <input type="radio" name="search_period" value="last_month"/>
-                            <span>Last</span>
-                            <input type="text" style="width:35px;"/>
+                            <span>Last</span>&nbsp;
+                            <input type="text" style="width:35px;"/>&nbsp;
                             <select>
                                 <option value="1" name="Jan">Jan</option>
                                 <option value="2" name="Feb">Feb</option>
@@ -384,7 +386,8 @@
             },
             end_date : { 
                 use_enddt : 'N',
-                end_dt : null 
+                end_dt : null ,
+                end_tm : null 
             },
             search_period : {
                 period : 0, //-1 ~ 999,
@@ -400,7 +403,6 @@
 
     $(".btn-next").on("click", function(){
         //next 버튼이 있는 item 안에 value가 있는지 확인하기
-        //checkValuesInContext(this);
 
         var next_item = $(this).data('next');
         var curr_item = $(this).data('curr');
@@ -427,13 +429,23 @@
                     rpt_month : $("#rpt_month").val(),
                     rpt_week : $("#rpt_week").val(),
                     rpt_day : $("#rpt_day").val(),
-                    rpt_time : $("#rpt_time").val(),
+                    rpt_time : $("#rpt_time.timepicker").val(),
                 }
-                str_val = $("#rpt_month option:selected").attr('name') + ' / ' + info_reportScheduler.rpt_time.rpt_day;
+
+                if(curr_unit == "Year") str_val = $("#rpt_month option:selected").attr('name') + ' / ' + info_reportScheduler.rpt_time.rpt_day;
+                if(curr_unit == "Month") str_val = 'Next month / ' + $("#rpt_month").val() + ' (st/nd/rd/th)';
+                if(curr_unit == "Week") str_val = 'Monday';
+                if(curr_unit == "Day") str_val = 'Tomorrow ' + $("#rpt_time.timepicker").val();
                 break;
             case 'end_date' : 
-                info_reportScheduler.end_date = $('input[name=end_date]:checked').val();
-                str_val = $('input[name=end_date]:checked').next().text();
+                var sc_info_enddt = info_reportScheduler.end_date;
+                sc_info_enddt.use_enddt = $('input[name=end_date]:checked').val();
+                sc_info_enddt.end_dt = $('#end_date').val();
+                sc_info_enddt.end_tm = $('#end_time').val();
+
+                if(sc_info_enddt.use_enddt == "never") str_val = 'Never';
+                if(sc_info_enddt.use_enddt == "time") str_val = 'Until ' + sc_info_enddt.end_tm + ' time(s)';
+                if(sc_info_enddt.use_enddt == "date") str_val = 'On ' + sc_info_enddt.end_dt;
                 break;
             case 'search_period' : 
                 info_reportScheduler.search_period = $('input[name=search_period]:checked').val();
@@ -507,7 +519,8 @@
         }
     })
 
-    $(".datepicker").datepicker();
+    $("#start_date.datepicker").datepicker();
+    $("#end_date.datepicker").datepicker();
 
     function setRptTimeContext(){
         var res = null;
@@ -571,7 +584,7 @@
         }
         if(curr_unit == 'Day') {
             var timepicker = CreateCustomElement('input',{
-                id : 'rpt_day',
+                id : 'rpt_time',
                 className : 'timepicker',
                 style : 'width : 75px;'
             });
@@ -601,41 +614,6 @@
                 $(el).val("");
         }
 
-    }
-    function checkValuesInContext(el) {
-        var context = $(el).parents('.item').find('.context');
-        var elements = context.find("input, textarea, select");
-
-      for (var i = 0; i < elements.length; i++) {
-        var element = elements[i];
-        var has_value = false;
-
-        if(element.tagName == 'input'){
-            if(element.type == 'radio'){
-                var element_name = elements[i].name;
-            }
-            if(element.type == 'text'){
-
-            }
-        }
-        if(element.tagName == 'textarea'){
-            var element_id = elements[i].id;
-            var element_class = elements[i].class;
-
-            
-        }
-        if(element.tagName == 'select'){
-            var element_id = elements[i].id;
-            var element_class = elements[i].class;
-        }
-
-        // Check if the element is empty (value is empty)
-        if (has_value) {
-            return 'Go Next';
-        } else{
-            return 'Has Empty Value';
-        }
-      }
     }
     function CreateCustomElement(tag, attributes) {
     var $element = $("<" + tag + ">");
